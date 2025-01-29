@@ -24,7 +24,7 @@ Simple todo web application created using MongoDB, NodeJS, and ExpressJS.
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/todoapp.git
+    git clone https://github.com/Buffito/todoApp.git
     cd todoapp
     ```
 
