@@ -1,22 +1,20 @@
 const express = require('express');
 const path = require('path');
-const bodyParser = require('body-parser')
-
+const bodyParser = require('body-parser');
 const routes = require('./routes/index');
 
 const app = express();
 
-app.set("views", path.join(__dirname, "views"));
+// Set views directory and view engine
+app.set('views', path.join(__dirname, '../views'));
+app.set('view engine', 'ejs');
 
-app.set("view engine", "ejs");
-
+// Middleware
 app.use(express.json());
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/public', express.static(path.join(__dirname, '../public')));
 
+// Routes
 app.use(routes);
-
-app.use("/public", express.static(path.join(__dirname, "public")));
 
 module.exports = app;

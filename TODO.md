@@ -1,6 +1,7 @@
 # TODO List 
-# Date: 28/1/2025
+# Date: 29/1/2025
 
 ## General
-- [ ] Refactor project
+- [x] Refactor project
+- [x] Restructure project to comply with Node.js best practices
 - [ ] Swap ejs with Angular
