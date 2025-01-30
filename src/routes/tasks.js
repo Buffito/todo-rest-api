@@ -10,7 +10,7 @@ router.route('/edit/:id')
         const { id } = req.params;
         try {
             const tasks = await toDoTask.find({});
-            res.render('todoUpdate.ejs', { todoTasks: tasks, taskId: id });
+            //res.render('todoUpdate.ejs', { todoTasks: tasks, taskId: id });
         } catch (err) {
             res.status(500).send(err);
         }

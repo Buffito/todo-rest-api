@@ -1,7 +1,5 @@
-const { renderCreateUserEJS } = require('../utils/renderHelpers');
-
 const renderCreateUserPage = (req, res) => {
-    renderCreateUserEJS(res, '');
+    //renderCreateUserEJS(res, '');
 };
 
 module.exports = {

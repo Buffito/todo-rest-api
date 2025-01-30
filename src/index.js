@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/', routes);
 
-app.set('view engine', 'ejs');
+//app.set('view engine', 'ejs');
 
 async function main() {
     try {

@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt');
 const validator = require('email-validator');
 const user = require('../models/user');
-const { renderCreateUserEJS, renderTasks } = require('../utils/renderHelpers');
 
 const login = async (req, res) => {
     const { email, password } = req.body;
@@ -12,12 +11,12 @@ const login = async (req, res) => {
             const isPasswordValid = await bcrypt.compare(password, authUser.password);
             if (isPasswordValid) {
                 loggedUser = authUser.username;
-                renderTasks(res, '');
+                //renderTasks(res, '');
             } else {
-                renderCreateUserEJS(res, 'Invalid password!');
+                //renderCreateUserEJS(res, 'Invalid password!');
             }
         } else {
-            renderCreateUserEJS(res, 'User not found!');
+            //renderCreateUserEJS(res, 'User not found!');
         }
     } catch (error) {
         res.status(500).send('Internal Server Error');
@@ -29,7 +28,7 @@ const register = async (req, res) => {
 
     try {
         if (!validator.validate(email)) {
-            return renderCreateUserEJS(res, 'Email was not valid!');
+           // return renderCreateUserEJS(res, 'Email was not valid!');
         }
 
         const salt = await bcrypt.genSalt(10);

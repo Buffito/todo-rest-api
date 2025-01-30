@@ -9,8 +9,8 @@ router.use(authRoutes);
 router.use(userRoutes);
 router.use(taskRoutes);
 
-router.get("/", async (request, response) => {
-    response.render('login.ejs');
+router.get("/", async (req, res) => {
+    //res.render('login.ejs');
 });
 
 module.exports = router;

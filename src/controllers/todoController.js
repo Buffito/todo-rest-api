@@ -1,5 +1,4 @@
 const toDoTask = require('../models/toDoTask');
-const { renderTasks } = require('../utils/renderHelpers');
 
 const addTask = async (req, res) => {
     const { content } = req.body;
@@ -8,9 +7,9 @@ const addTask = async (req, res) => {
 
     try {
         await newToDo.save();
-        renderTasks(res, '');
+        //renderTasks(res, '');
     } catch (err) {
-        renderTasks(res, 'Task was not created!');
+        //renderTasks(res, 'Task was not created!');
     }
 };
 
@@ -19,7 +18,7 @@ const editTask = async (req, res) => {
     const { content } = req.body;
     try {
         await toDoTask.findByIdAndUpdate(id, { content });
-        renderTasks(res, '');
+        //renderTasks(res, '');
     } catch (err) {
         res.status(500).send(err);
     }
