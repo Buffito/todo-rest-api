@@ -23,27 +23,7 @@ const login = async (req, res) => {
     }
 };
 
-const register = async (req, res) => {
-    const { username, password, email } = req.body;
-
-    try {
-        if (!validator.validate(email)) {
-           res.status(401).send('Invalid Email');
-        }
-
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-        
-        const registerUser = new user({ username, email, password: hashedPassword });
-        await registerUser.save();
-        
-        res.status(200).send('User created successfully!');
-    } catch (err) {
-        res.status(500).send(err);
-    }
-};
 
 module.exports = {
-    login,
-    register
+    login
 };
