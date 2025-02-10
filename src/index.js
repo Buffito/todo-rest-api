@@ -1,6 +1,6 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const database = require('./config/db');
 const routes = require('./routes/index');
 
 dotenv.config();
@@ -12,19 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/', routes);
 
-async function main() {
-    try {
-        await mongoose.connect(process.env.MONGO_URL, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        });
-        console.log('Connected to MongoDB');
-    } catch (err) {
-        console.error('Failed to connect to MongoDB', err);
-    }
-}
-
-main();
+database.connectDB;
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
