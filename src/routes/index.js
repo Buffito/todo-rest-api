@@ -9,8 +9,8 @@ router.use(authRoutes);
 router.use(userRoutes);
 router.use(taskRoutes);
 
-router.get("/", async (req, res) => {
-    //res.render('login.ejs');
+router.get("/", async (res) => {
+    res.status(200).send('Api is running!');
 });
 
 module.exports = router;

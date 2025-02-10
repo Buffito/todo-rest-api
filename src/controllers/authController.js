@@ -11,15 +11,15 @@ const login = async (req, res) => {
             const isPasswordValid = await bcrypt.compare(password, authUser.password);
             if (isPasswordValid) {
                 loggedUser = authUser.username;
-                //renderTasks(res, '');
+                res.status(200).send('Login successful');
             } else {
-                //renderCreateUserEJS(res, 'Invalid password!');
+                res.status(401).send('Invalid credentials');
             }
         } else {
-            //renderCreateUserEJS(res, 'User not found!');
+            res.status(404).send('User not found!');
         }
-    } catch (error) {
-        res.status(500).send('Internal Server Error');
+    } catch (err) {
+        res.status(500).send(err);
     }
 };
 
@@ -28,7 +28,7 @@ const register = async (req, res) => {
 
     try {
         if (!validator.validate(email)) {
-           // return renderCreateUserEJS(res, 'Email was not valid!');
+           res.status(401).send('Invalid Email');
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -36,9 +36,10 @@ const register = async (req, res) => {
         
         const registerUser = new user({ username, email, password: hashedPassword });
         await registerUser.save();
-        res.redirect('/auth'); 
-    } catch (error) {
-        res.status(500).send('Internal Server Error');
+        
+        res.status(200).send('User created successfully!');
+    } catch (err) {
+        res.status(500).send(err);
     }
 };
 

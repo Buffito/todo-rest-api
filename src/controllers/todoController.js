@@ -7,9 +7,9 @@ const addTask = async (req, res) => {
 
     try {
         await newToDo.save();
-        //renderTasks(res, '');
+        res.status(200).send('Task created successfully!');
     } catch (err) {
-        //renderTasks(res, 'Task was not created!');
+        res.status(500).send(err);
     }
 };
 
@@ -18,7 +18,7 @@ const editTask = async (req, res) => {
     const { content } = req.body;
     try {
         await toDoTask.findByIdAndUpdate(id, { content });
-        //renderTasks(res, '');
+        res.status(200).send('Task updated successfully!');
     } catch (err) {
         res.status(500).send(err);
     }
@@ -28,7 +28,7 @@ const removeTask = async (req, res) => {
     const { id } = req.params;
     try {
         await toDoTask.findByIdAndRemove(id);
-        renderTasks(res, '');
+        res.status(200).send('Task removed successfully!');
     } catch (err) {
         res.status(500).send(err);
     }
