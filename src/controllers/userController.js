@@ -1,27 +1,35 @@
-const bcrypt = require('bcrypt');
-const validator = require('email-validator');
-const user = require('../models/user');
+const express = require('express');
+const router = express.Router();
+const userService = require('../services/userService');
 
-const register = async (req, res) => {
-    const { username, password, email } = req.body;
+// GET all users
+router.get('/users', async (req, res) => {
+    const users = await userService.getAllUsers();
+    res.status(200).send(users);
+});
 
-    try {
-        if (!validator.validate(email)) {
-           res.status(401).json({ message: 'Invalid Email' });
-        }
+// GET a user by id
+router.get('/users/:id', async (req, res) => {
+    const user = await userService.getUserById(req.params.id);
+    res.status(200).send(user);
+});
 
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-        
-        const registerUser = new user({ username, email, password: hashedPassword });
-        await registerUser.save();
-        
-        res.status(200).json({ message: 'User created successfully!' });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-};
+// POST a new user
+router.post('/users', async (req, res) => {
+    const newUser = await userService.createUser(req.body);
+    res.status(201).send(newUser);
+});
 
-module.exports = {
-    register
-};
+// PUT update a user by id
+router.put('/users/:id', async (req, res) => {
+    const updatedUser = await userService.updateUserById(req.params.id, req.body);
+    res.status(200).send(updatedUser);
+});
+
+// DELETE a user by id
+router.delete('/users/:id', async (req, res) => {
+    const deletedUser = await userService.deleteUserById(req.params.id);
+    res.status(200).send(deletedUser);
+});
+
+module.exports = router;
