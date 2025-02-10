@@ -1,41 +1,63 @@
-const toDoTask = require('../models/toDoTask');
+const express = require('express');
+const router = express.Router();
+const todoService = require('../services/todoService');
 
-const addTask = async (req, res) => {
-    const { content } = req.body;
-    const creator = loggedUser;
-    const newToDo = new toDoTask({ content, creator });
-
+// GET all todos
+router.get('/todos', async (req, res) => {
     try {
-        await newToDo.save();
-        res.status(200).send('Task created successfully!');
-    } catch (err) {
-        res.status(500).send(err);
-    }
-};
+        const todos = await todoService.getAllTodos();
+        res.status(200).json({ message: 'Todos fetched successfully', data: todos });
+      } catch (err) {
+        res.status(500).json({ message: 'Error fetching todos', error: err });
+      }
+});
 
-const editTask = async (req, res) => {
-    const { id } = req.params;
-    const { content } = req.body;
+// GET a todo by id
+router.get('/todos/:id', async (req, res) => {
     try {
-        await toDoTask.findByIdAndUpdate(id, { content });
-        res.status(200).send('Task updated successfully!');
-    } catch (err) {
-        res.status(500).send(err);
-    }
-};
+        const todo = await todoService.getTodoById(req.params.id);
+        res.status(200).json({ message: 'Todo fetched successfully', data: todo });
+      } catch (err) {
+        res.status(500).json({ message: 'Error fetching todo', error: err });
+      }
+});
 
-const removeTask = async (req, res) => {
-    const { id } = req.params;
+// GET todos by creator
+router.get('/todos/creator/:creator', async (req, res) => {
     try {
-        await toDoTask.findByIdAndRemove(id);
-        res.status(200).send('Task removed successfully!');
-    } catch (err) {
-        res.status(500).send(err);
-    }
-};
+        const todos = await todoService.getTodoByCreator(req.params.creator);
+        res.status(200).json({ message: 'Todos fetched successfully', data: todos });
+      } catch (err) {
+        res.status(500).json({ message: 'Error fetching todos', error: err });
+      }
+});
 
-module.exports = {
-    addTask,
-    editTask,
-    removeTask
-};
+// POST a new todo
+router.post('/todos', async (req, res) => {
+    try {
+        const todo = await todoService.createNewTodo(req.body);
+        res.status(201).json({ message: 'Todo added successfully', data: todo });
+      } catch (err) {
+        res.status(500).json({ message: 'Error adding todo', error: err });
+      }
+});
+
+// PUT update a todo by id
+router.put('/todos/:id', async (req, res) => {
+    try {
+        const todo = await todoService.updateTodoById(req.params.id, req.body);
+        res.status(200).json({ message: 'Todo updated successfully', data: todo });
+      } catch (err) {
+        res.status(500).json({ message: 'Error updating todo', error: err });
+      }
+});
+
+// DELETE a todo by id
+router.delete('/todos/:id', async (req, res) => {
+    try {
+        const todo = await todoService.deleteTodoById(req.params.id);
+        res.status(200).json({ message: 'Todo deleted successfully', data: todo });
+      } catch (err) {
+        res.status(500).json({ message: 'Error deleting todo', error: err });
+      }
+});
