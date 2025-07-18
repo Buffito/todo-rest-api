@@ -1,4 +1,4 @@
-# TodoApp REST API
+# Todo REST API
 
 A simple Node.js REST API for managing users and todo tasks.  
 Built with Express, MongoDB, and follows RESTful principles.
