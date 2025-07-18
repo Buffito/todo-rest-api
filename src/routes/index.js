@@ -9,7 +9,7 @@ router.use(authRoutes);
 router.use(userRoutes);
 router.use(taskRoutes);
 
-router.get("/", async (res) => {
+router.get("/", async (req, res) => {
     res.status(200).send('Api is running!');
 });
 
