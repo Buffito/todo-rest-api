@@ -9,8 +9,17 @@ router.use(authRoutes);
 router.use(userRoutes);
 router.use(taskRoutes);
 
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: API status
+ *     responses:
+ *       200:
+ *         description: Api is running!
+ */
 router.get("/", async (req, res) => {
-    res.status(200).send('Api is running!');
+    res.status(200).json({ message: 'Api is running!'});
 });
 
 module.exports = router;

@@ -10,7 +10,7 @@ Built with Express, MongoDB, and follows RESTful principles.
 - RESTful endpoints returning JSON
 - Error handling with proper HTTP status codes
 - Ready for JWT authentication (to be added)
-- API documentation with Swagger (`/api-docs`) (to be added)
+- API documentation with Swagger (`/api-docs`)
 
 ## Installation
 
@@ -58,4 +58,3 @@ Built with Express, MongoDB, and follows RESTful principles.
 ## Future Improvements
 
 - Add JWT authentication 
-- Create the full Swagger file
