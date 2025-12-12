@@ -4,9 +4,15 @@ const todoController = require('../controllers/todoController');
 const authenticateJWT = require('../middleware/auth');
 
 router.use(authenticateJWT);
+
 /**
- * @swagger
+ * @openapi
  * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
  *   schemas:
  *     TodoInput:
  *       type: object
@@ -34,134 +40,146 @@ router.use(authenticateJWT);
  *           format: date-time
  */
 
- /**
-  * @swagger
-  * /todos:
-  *   get:
-  *     summary: Get all todos
-  *     responses:
-  *       200:
-  *         description: List of todos
-  *         content:
-  *           application/json:
-  *             schema:
-  *               type: array
-  *               items:
-  *                 $ref: '#/components/schemas/Todo'
-  */
-router.get('/todos', todoController.getAllTodos);
+/**
+ * @openapi
+ * /tasks:
+ *   get:
+ *     summary: Get all todos
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of todos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Todo'
+ */
+router.get('/', todoController.getAllTodos);
 
- /**
-  * @swagger
-  * /todos/{id}:
-  *   get:
-  *     summary: Get a todo by ID
-  *     parameters:
-  *       - name: id
-  *         in: path
-  *         required: true
-  *         schema:
-  *           type: string
-  *     responses:
-  *       200:
-  *         description: Todo found
-  *         content:
-  *           application/json:
-  *             schema:
-  *               $ref: '#/components/schemas/Todo'
-  */
-router.get('/todos/:id', todoController.getTodoById);
+/**
+ * @openapi
+ * /tasks/{id}:
+ *   get:
+ *     summary: Get a todo by ID
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Todo found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Todo'
+ */
+router.get('/:id', todoController.getTodoById);
 
- /**
-  * @swagger
-  * /todos/creator/{creator}:
-  *   get:
-  *     summary: Get todos by creator
-  *     parameters:
-  *       - name: creator
-  *         in: path
-  *         required: true
-  *         schema:
-  *           type: string
-  *     responses:
-  *       200:
-  *         description: Todos by creator
-  *         content:
-  *           application/json:
-  *             schema:
-  *               type: array
-  *               items:
-  *                 $ref: '#/components/schemas/Todo'
-  */
-router.get('/todos/creator/:creator', todoController.getTodoByCreator);
+/**
+ * @openapi
+ * /tasks/creator/{creator}:
+ *   get:
+ *     summary: Get todos by creator
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: creator
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Todos by creator
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Todo'
+ */
+router.get('/creator/:creator', todoController.getTodoByCreator);
 
- /**
-  * @swagger
-  * /todos:
-  *   post:
-  *     summary: Create a new todo
-  *     requestBody:
-  *       required: true
-  *       content:
-  *         application/json:
-  *           schema:
-  *             $ref: '#/components/schemas/TodoInput'
-  *     responses:
-  *       201:
-  *         description: Todo created
-  *         content:
-  *           application/json:
-  *             schema:
-  *               $ref: '#/components/schemas/Todo'
-  */
-router.post('/todos', todoController.createNewTodo);
+/**
+ * @openapi
+ * /tasks:
+ *   post:
+ *     summary: Create a new todo
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/TodoInput'
+ *     responses:
+ *       201:
+ *         description: Todo created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Todo'
+ */
+router.post('/', todoController.createNewTodo);
 
- /**
-  * @swagger
-  * /todos/{id}:
-  *   put:
-  *     summary: Update a todo by ID
-  *     parameters:
-  *       - name: id
-  *         in: path
-  *         required: true
-  *         schema:
-  *           type: string
-  *     requestBody:
-  *       required: true
-  *       content:
-  *         application/json:
-  *           schema:
-  *             $ref: '#/components/schemas/TodoInput'
-  *     responses:
-  *       200:
-  *         description: Todo updated
-  *         content:
-  *           application/json:
-  *             schema:
-  *               $ref: '#/components/schemas/Todo'
-  */
-router.put('/todos/:id', todoController.updateTodoById);
+/**
+ * @openapi
+ * /tasks/{id}:
+ *   put:
+ *     summary: Update a todo by ID
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/TodoInput'
+ *     responses:
+ *       200:
+ *         description: Todo updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Todo'
+ */
+router.put('/:id', todoController.updateTodoById);
 
- /**
-  * @swagger
-  * /todos/{id}:
-  *   delete:
-  *     summary: Delete a todo by ID
-  *     parameters:
-  *       - name: id
-  *         in: path
-  *         required: true
-  *         schema:
-  *           type: string
-  *     responses:
-  *       200:
-  *         description: Todo deleted
-  *         content:
-  *           application/json:
-  *             schema:
-  *               $ref: '#/components/schemas/Todo'
-  */
-router.delete('/todos/:id', todoController.deleteTodoById);
+/**
+ * @openapi
+ * /tasks/{id}:
+ *   delete:
+ *     summary: Delete a todo by ID
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Todo deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Todo'
+ */
+router.delete('/:id', todoController.deleteTodoById);
 
 module.exports = router;

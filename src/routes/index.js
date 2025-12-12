@@ -5,12 +5,8 @@ const taskRoutes = require('./todo');
 
 const router = express.Router();
 
-router.use(authRoutes);
-router.use(userRoutes);
-router.use(taskRoutes);
-
 /**
- * @swagger
+ * @openapi
  * /:
  *   get:
  *     summary: API status
@@ -18,8 +14,13 @@ router.use(taskRoutes);
  *       200:
  *         description: Api is running!
  */
-router.get("/", async (req, res) => {
-    res.status(200).json({ message: 'Api is running!'});
+router.get('/', (req, res) => {
+  res.status(200).json({ message: 'Api is running!' });
 });
+
+// Use explicit prefixes (recommended)
+router.use('/login', authRoutes);
+router.use('/users', userRoutes);
+router.use('/tasks', taskRoutes);
 
 module.exports = router;

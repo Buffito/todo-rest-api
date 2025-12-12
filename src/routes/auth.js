@@ -3,7 +3,7 @@ const authController = require('../controllers/authController');
 const router = express.Router();
 
 /**
- * @swagger
+ * @openapi
  * /login:
  *   post:
  *     summary: Login a user
@@ -31,6 +31,6 @@ const router = express.Router();
  *       404:
  *         description: User not found
  */
-router.post('/login', authController.login);
+router.post('/', authController.login);
 
 module.exports = router;

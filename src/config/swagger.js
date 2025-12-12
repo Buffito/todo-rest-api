@@ -1,5 +1,6 @@
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const path = require('path');
 
 const options = {
   definition: {
@@ -10,7 +11,7 @@ const options = {
       description: 'A simple Todo REST API',
     },
   },
-  apis: ['./src/routes/*.js'], // Path to your route files
+  apis: [path.resolve(__dirname, '../routes/*.js')]
 };
 
 const swaggerSpec = swaggerJSDoc(options);

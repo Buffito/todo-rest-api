@@ -3,7 +3,7 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 
 /**
- * @swagger
+ * @openapi
  * /users:
  *   get:
  *     summary: Get all users
@@ -11,10 +11,10 @@ const userController = require('../controllers/userController');
  *       200:
  *         description: List of users
  */
-router.get('/users', userController.getAllUsers);
+router.get('/', userController.getAllUsers);
 
 /**
- * @swagger
+ * @openapi
  * /users:
  *   post:
  *     summary: Create a new user
@@ -28,11 +28,10 @@ router.get('/users', userController.getAllUsers);
  *       201:
  *         description: User created
  */
-router.post('/users', userController.createUser);
+router.post('/', userController.createUser);
 
-// Add this at the top of your file (or in a shared file):
 /**
- * @swagger
+ * @openapi
  * components:
  *   schemas:
  *     UserInput:
